@@ -17,5 +17,9 @@ def browser():
     driver.quit()
 
 @pytest.fixture
-def link():
+def product_link():
     return "https://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+
+@pytest.fixture
+def main_link():
+    return "https://selenium1py.pythonanywhere.com/"

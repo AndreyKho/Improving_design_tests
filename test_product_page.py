@@ -9,6 +9,7 @@
 
 import pytest
 from pages.product_page import ProductPage
+from pages.basket_page import BasketPage
 
 @pytest.mark.parametrize('links', ["https://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0",
                                   "https://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer1",
@@ -59,3 +60,17 @@ def test_guest_should_see_login_link_on_product_page(browser):
     page = ProductPage(browser, link)
     page.open()
     page.should_be_login_link()
+
+#Задание: наследование и отрицательные проверки
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser, product_link):
+    page = ProductPage(browser, product_link)
+    #Гость открывает страницу товара
+    page.open()
+    #Переходит в корзину по кнопке в шапке 
+    page.go_to_basket()
+
+    basket_page = BasketPage(browser, browser.current_url)
+    #Ожидаем, что в корзине нет товаров
+    basket_page.should_not_be_product_in_basket()
+    #Ожидаем, что есть текст о том что корзина пуста 
+    basket_page.should_be_empty_text_busket()
